@@ -1,1 +1,129 @@
-console.log('Hier komt je server voor Sprint 12.')
+import express from 'express';
+import { Liquid } from 'liquidjs';
+import path from 'path';
+
+const app = express();
+const port = process.env.PORT || 8000;
+
+// ====================
+// MIDDLEWARE
+// ====================
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.resolve('./assets')));
+
+// ====================
+// LIQUID ENGINE
+// ====================
+const engine = new Liquid({
+  root: path.resolve('./views'),
+  extname: '.liquid'
+});
+
+app.engine('liquid', engine.express());
+app.set('view engine', 'liquid');
+
+// ====================
+// API
+// ====================
+const API_URL = "https://fdnd-agency.directus.app/items/f_houses";
+
+// ====================
+// FAVORITES (TEMP STORAGE)
+// ====================
+let favorites = [];
+
+// ====================
+// INDEX PAGE (OVERZICHT)
+// ====================
+app.get('/', async (req, res) => {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+
+    res.render('index.liquid', {
+      listings: data.data,
+      favorites
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Fout bij laden woningen');
+  }
+});
+
+// ====================
+// DETAIL PAGE (Funda LDP)
+// ====================
+app.get('/listing/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    const data = await response.json();
+
+    const house = data.data;
+
+    const isFavorite = favorites.some(f => f.id == id);
+
+    res.render('detail.liquid', {
+      listing: {
+        ...house,
+        is_favorite: isFavorite
+      }
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Fout bij laden woning');
+  }
+});
+
+// ====================
+// FAVORITES TOGGLE ❤️
+// ====================
+app.post('/favorites/toggle/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    const data = await response.json();
+    const house = data.data;
+
+    const exists = favorites.find(f => f.id == id);
+
+    if (exists) {
+      favorites = favorites.filter(f => f.id != id);
+    } else {
+      favorites.push({
+        id: house.id,
+        street: house.street,
+        house_nr: house.house_nr,
+        city: house.city,
+        price: house.price,
+        image: house.poster_image
+      });
+    }
+
+    res.redirect('back');
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Fout bij favorites');
+  }
+});
+
+// ====================
+// FAVORITES PAGE
+// ====================
+app.get('/favorites', (req, res) => {
+  res.render('favorites.liquid', {
+    favorites
+  });
+});
+
+// ====================
+// SERVER START
+// ====================
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
