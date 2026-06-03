@@ -1,0 +1,125 @@
+{% include 'partials/head' %}
+
+<body>
+
+{% include 'partials/header' %}
+
+<main class="ldp-container">
+
+  <!--  TERUG -->
+  <a href="/" class="back-link">← Terug naar overzicht</a>
+
+  <!-- HERO IMAGE -->
+  <section class="hero">
+
+    <img
+      class="hero-image"
+      src="{{ listing.poster_image }}"
+      alt="Hoofdfoto {{ listing.street }}"
+    >
+
+  </section>
+
+  <!-- TITEL + PRIJS -->
+  <section class="title-block">
+
+    <h1>
+      {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
+    </h1>
+
+    <p class="location">
+      {{ listing.postal_code }} {{ listing.city }}
+    </p>
+
+    <h2 class="price">
+      € {{ listing.price | number_with_delimiter }} k.k.
+    </h2>
+
+    <!-- ❤️ FAVORIET -->
+    <form method="post" action="/favorites/toggle/{{ listing.id }}">
+      <button class="favorite-btn">
+
+        {% if listing.is_favorite %}
+          ❤️ In favorieten
+        {% else %}
+          🤍 Opslaan
+        {% endif %}
+
+      </button>
+    </form>
+
+  </section>
+
+  <!-- FACTS -->
+  <section class="facts">
+
+    <div> {{ listing.m2 }} m² wonen</div>
+    <div> {{ listing.m2_garden }} m² perceel</div>
+    <div> {{ listing.rooms }} kamers</div>
+    <div> {{ listing.construction_year }} bouwjaar</div>
+
+  </section>
+
+  <!-- OMSCHRIJVING -->
+  <section class="description">
+
+    <h2>Omschrijving</h2>
+
+    <div class="text">
+      {{ listing.description | raw }}
+    </div>
+
+  </section>
+
+  <!-- KENMERKEN -->
+  <section class="details">
+
+    <h2>Kenmerken</h2>
+
+    <table>
+
+      <tr>
+        <td>Makelaar</td>
+        <td>{{ listing.agent }}</td>
+      </tr>
+
+      <tr>
+        <td>Woonoppervlak</td>
+        <td>{{ listing.m2 }} m²</td>
+      </tr>
+
+      <tr>
+        <td>Perceel</td>
+        <td>{{ listing.m2_garden }} m²</td>
+      </tr>
+
+      <tr>
+        <td>Inhoud</td>
+        <td>{{ listing.volume_m3 }} m³</td>
+      </tr>
+
+      <tr>
+        <td>Postcode</td>
+        <td>{{ listing.postal_code }}</td>
+      </tr>
+
+    </table>
+
+  </section>
+
+  <!-- MAKELAAR -->
+  <aside class="agent">
+
+    <h3>{{ listing.agent }}</h3>
+
+    <p>Neem contact op voor deze woning</p>
+
+    <button>Contact makelaar</button>
+
+  </aside>
+
+</main>
+
+{% include 'partials/foot' %}
+
+</body>
