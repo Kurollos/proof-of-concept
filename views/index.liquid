@@ -8,21 +8,21 @@
 
   <h1>Woningen te koop</h1>
 
-  <!-- 🏡 LISTING GRID -->
+  <!--  LISTING GRID -->
   <div class="listing-grid">
 
     {% for listing in listings %}
 
       <a href="/listing/{{ listing.id }}" class="card">
 
-        <!-- 📸 FOTO -->
+        <!--  FOTO -->
         <img
           src="{{ listing.poster_image }}"
           alt="Woning foto"
           class="card-image"
         >
 
-        <!-- 🧾 INFO -->
+        <!-- INFO -->
         <div class="card-content">
 
           <h2>
@@ -37,14 +37,14 @@
             € {{ listing.price | number_with_delimiter }}
           </p>
 
-          <!-- 📊 KORTE FACTS -->
+          <!-- KORTE FACTS -->
           <div class="facts">
 
-            <span>🏠 {{ listing.m2 | default: "n.v.t." }} m²</span>
+            <span> {{ listing.m2 | default: "n.v.t." }} m²</span>
 
-            <span>🛏️ {{ listing.rooms | default: "n.v.t." }} kamers</span>
+            <span> {{ listing.rooms | default: "n.v.t." }} kamers</span>
 
-            <span>🌿 {{ listing.m2_garden | default: "n.v.t." }} m² tuin</span>
+            <span> {{ listing.m2_garden | default: "n.v.t." }} m² tuin</span>
 
           </div>
 
