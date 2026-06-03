@@ -1,0 +1,300 @@
+/* =========================
+   BASE / RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #F5F5F5;
+  color: #333333;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   LAYOUT CONTAINERS
+========================= */
+
+.container,
+.ldp-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* =========================
+   HEADER / NAV
+========================= */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+  color: #FF8B1F;
+}
+
+.tabs {
+  display: flex;
+  gap: 15px;
+}
+
+.tab {
+  font-size: 14px;
+  color: #333333;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.tab:hover {
+  background: #E5E5E5;
+}
+
+.auth a {
+  color: #007CC3;
+  font-size: 14px;
+}
+
+/* =========================
+   LISTING GRID
+========================= */
+
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* CARD */
+
+.card {
+  background: #FFFFFF;
+  border-radius: 10px;
+  overflow: hidden;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #666;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 8px;
+  color: #333333;
+}
+
+.facts {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* =========================
+   DETAIL PAGE (LDP)
+========================= */
+
+.hero-image {
+  width: 100%;
+  border-radius: 10px;
+  max-height: 450px;
+  object-fit: cover;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #007CC3;
+}
+
+.title-block {
+  margin-top: 20px;
+}
+
+.title-block h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.location {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* FAVORIET BUTTON */
+
+.favorite-btn {
+  background: #FF8B1F;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.favorite-btn:hover {
+  opacity: 0.9;
+}
+
+/* FACTS DETAIL */
+
+.facts {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* DESCRIPTION */
+
+.description {
+  margin-bottom: 30px;
+}
+
+.description h2 {
+  margin-bottom: 10px;
+}
+
+/* DETAILS TABLE */
+
+.details table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.details td {
+  padding: 12px;
+  border-bottom: 1px solid #E5E5E5;
+  font-size: 14px;
+}
+
+.details td:first-child {
+  color: #666;
+  width: 40%;
+}
+
+/* AGENT BOX */
+
+.agent {
+  margin-top: 30px;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 10px;
+}
+
+.agent h3 {
+  margin-bottom: 5px;
+}
+
+.agent button {
+  margin-top: 10px;
+  background: #007CC3;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.agent button:hover {
+  opacity: 0.9;
+}
+
+.footer {
+  margin-top: 60px;
+  background: #FFFFFF;
+  border-top: 1px solid #E5E5E5;
+  padding: 40px 20px 20px;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+}
+
+.footer-column h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333333;
+}
+
+.footer-column a {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.footer-column a:hover {
+  color: #007CC3;
+}
+
+.footer-column.brand h4 {
+  color: #FF8B1F;
+}
+
+.footer-column.brand p {
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
