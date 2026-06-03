@@ -1,0 +1,79 @@
+{% include 'partials/head' %}
+
+<body>
+
+{% include 'partials/header' %}
+
+<main class="container">
+
+  <h1>❤️ Jouw favorieten</h1>
+
+  {% if favorites and favorites.size > 0 %}
+
+    <p>{{ favorites.size }} woning(en) opgeslagen</p>
+
+    <!-- FAVORIETEN GRID -->
+    <div class="listing-grid">
+
+      {% for listing in favorites %}
+
+        <a href="/listing/{{ listing.id }}" class="card">
+
+          <!-- FOTO -->
+          <img
+            src="{{ listing.poster_image }}"
+            alt="Woning foto"
+            class="card-image"
+          >
+
+          <!-- INFO -->
+          <div class="card-content">
+
+            <h2>
+              {{ listing.street }} {{ listing.house_nr }}
+            </h2>
+
+            <p>
+              {{ listing.postal_code }} {{ listing.city }}
+            </p>
+
+            <p class="price">
+              € {{ listing.price | number_with_delimiter }}
+            </p>
+
+            <!-- FACTS -->
+            <div class="facts">
+
+              <span>{{ listing.m2 | default: "n.v.t." }} m²</span>
+              <span>{{ listing.rooms | default: "n.v.t." }} kamers</span>
+              <span>{{ listing.m2_garden | default: "n.v.t." }} m² tuin</span>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      {% endfor %}
+
+    </div>
+
+  {% else %}
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state">
+
+      <h2>Geen favorieten nog</h2>
+      <p>Bewaar woningen door op ❤️ Opslaan te klikken.</p>
+
+      <a href="/" class="empty-button">Bekijk woningen</a>
+
+    </div>
+
+  {% endif %}
+
+</main>
+
+{% include 'partials/foot' %}
+
+</body>
