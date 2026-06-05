@@ -51,20 +51,15 @@ body {
 }
 
 /* TABS */
-.nav .tabs {
+.tabs {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  gap: 1rem;
 }
 
-/* TAB ITEM */
-.nav .tab {
-  font-size: 14px;
-  color: #FFFFFF;
-  padding: 6px 10px;
-  border-radius: 6px;
-  transition: 0.2s;
+.tabs > a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.75rem 1rem;
 }
 
 .nav .tab:hover {
