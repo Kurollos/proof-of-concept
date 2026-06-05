@@ -6,45 +6,45 @@
 
 <main class="ldp-container">
 
-  <!--  TERUG -->
+  <!-- TERUG -->
   <a href="/" class="back-link">← Terug naar overzicht</a>
 
   <!-- HERO IMAGE -->
   <section class="hero">
+    <h1 class="visually-hidden">
+      {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
+    </h1>
 
-  <img 
-  class="hero-image" 
-  src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}" 
-  alt="Hoofdfoto {{ listing.street }}"
->
-
+    <img 
+      class="hero-image" 
+      src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}" 
+      alt="Hoofdfoto {{ listing.street }}"
+    >
   </section>
 
   <!-- TITEL + PRIJS -->
   <section class="title-block">
 
-    <h1>
+    <h2>
       {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
-    </h1>
+    </h2>
 
     <p class="location">
       {{ listing.postal_code }} {{ listing.city }}
     </p>
 
-    <h2 class="price">
+    <h3 class="price">
       € {{ listing.price | number_with_delimiter }} k.k.
-    </h2>
+    </h3>
 
     <!-- ❤️ FAVORIET -->
     <form method="post" action="/favorites/toggle/{{ listing.id }}">
       <button class="favorite-btn">
-
         {% if listing.is_favorite %}
           ❤️ In favorieten
         {% else %}
           🤍 Opslaan
         {% endif %}
-
       </button>
     </form>
 
@@ -52,12 +52,12 @@
 
   <!-- FACTS -->
   <section class="facts">
+    <h2 class="visually-hidden">Woning kenmerken</h2>
 
-    <div> {{ listing.m2 }} m² wonen</div>
-    <div> {{ listing.m2_garden }} m² perceel</div>
-    <div> {{ listing.rooms }} kamers</div>
-    <div> {{ listing.construction_year }} bouwjaar</div>
-
+    <div>{{ listing.m2 }} m² wonen</div>
+    <div>{{ listing.m2_garden }} m² perceel</div>
+    <div>{{ listing.rooms }} kamers</div>
+    <div>{{ listing.construction_year }} bouwjaar</div>
   </section>
 
   <!-- OMSCHRIJVING -->
@@ -77,7 +77,6 @@
     <h2>Kenmerken</h2>
 
     <table>
-
       <tr>
         <td>Makelaar</td>
         <td>{{ listing.agent }}</td>
@@ -102,13 +101,14 @@
         <td>Postcode</td>
         <td>{{ listing.postal_code }}</td>
       </tr>
-
     </table>
 
   </section>
 
   <!-- MAKELAAR -->
   <aside class="agent">
+
+    <h2 class="visually-hidden">Makelaar</h2>
 
     <h3>{{ listing.agent }}</h3>
 
