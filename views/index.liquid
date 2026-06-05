@@ -16,11 +16,11 @@
       <a href="/listing/{{ listing.id }}" class="card">
 
         <!--  FOTO -->
-        <img
-          src="{{ listing.poster_image }}"
-          alt="Woning foto"
-          class="card-image"
-        >
+         <img 
+  class="hero-image" 
+  src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}" 
+  alt="Hoofdfoto {{ listing.street }}"
+>
 
         <!-- INFO -->
         <div class="card-content">
