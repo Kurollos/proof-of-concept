@@ -11,6 +11,7 @@
 
   <!-- HERO IMAGE -->
   <section class="hero">
+
     <h1 class="visually-hidden">
       {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
     </h1>
@@ -20,6 +21,18 @@
       src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}" 
       alt="Hoofdfoto {{ listing.street }}"
     >
+
+    <!-- BEWAREN BUTTON (OVER IMAGE) -->
+    <form method="post" action="/favorites/toggle/{{ listing.id }}" class="save-form">
+      <button class="save-btn">
+        {% if listing.is_favorite %}
+          ❤️ Opgeslagen
+        {% else %}
+          🤍 Bewaren
+        {% endif %}
+      </button>
+    </form>
+
   </section>
 
   <!-- TITEL + PRIJS -->
@@ -36,17 +49,6 @@
     <h3 class="price">
       € {{ listing.price | number_with_delimiter }} k.k.
     </h3>
-
-    <!-- ❤️ FAVORIET -->
-    <form method="post" action="/favorites/toggle/{{ listing.id }}">
-      <button class="favorite-btn">
-        {% if listing.is_favorite %}
-          ❤️ In favorieten
-        {% else %}
-          🤍 Opslaan
-        {% endif %}
-      </button>
-    </form>
 
   </section>
 
