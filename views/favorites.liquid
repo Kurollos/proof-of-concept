@@ -17,42 +17,54 @@
 
       {% for listing in favorites %}
 
-        <a href="/listing/{{ listing.id }}" class="card">
+        <div class="card-wrapper">
 
-          <!-- FOTO -->
-          <img
-            src="{{ listing.poster_image }}"
-            alt="Woning foto"
-            class="card-image"
-          >
+          <!-- CARD LINK -->
+          <a href="/listing/{{ listing.id }}" class="card">
 
-          <!-- INFO -->
-          <div class="card-content">
+            <!-- FOTO -->
+            <img
+              src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}"
+              alt="Woning foto"
+              class="card-image"
+            >
 
-            <h2>
-              {{ listing.street }} {{ listing.house_nr }}
-            </h2>
+            <!-- INFO -->
+            <div class="card-content">
 
-            <p>
-              {{ listing.postal_code }} {{ listing.city }}
-            </p>
+              <h2>
+                {{ listing.street }} {{ listing.house_nr }}
+              </h2>
 
-            <p class="price">
-              € {{ listing.price | number_with_delimiter }}
-            </p>
+              <p>
+                {{ listing.postal_code }} {{ listing.city }}
+              </p>
 
-            <!-- FACTS -->
-            <div class="facts">
+              <p class="price">
+                € {{ listing.price | number_with_delimiter }}
+              </p>
 
-              <span>{{ listing.m2 | default: "n.v.t." }} m²</span>
-              <span>{{ listing.rooms | default: "n.v.t." }} kamers</span>
-              <span>{{ listing.m2_garden | default: "n.v.t." }} m² tuin</span>
+              <!-- FACTS -->
+              <div class="facts">
+
+                <span>{{ listing.m2 | default: "n.v.t." }} m²</span>
+                <span>{{ listing.rooms | default: "n.v.t." }} kamers</span>
+                <span>{{ listing.m2_garden | default: "n.v.t." }} m² tuin</span>
+
+              </div>
 
             </div>
 
-          </div>
+          </a>
 
-        </a>
+          <!-- DELETE BUTTON -->
+          <form action="/favorites/delete/{{ listing.id }}" method="POST" class="delete-form">
+            <button type="submit" class="delete-btn">
+              🗑 Verwijderen
+            </button>
+          </form>
+
+        </div>
 
       {% endfor %}
 

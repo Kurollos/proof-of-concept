@@ -121,6 +121,23 @@ app.get('/favorites', (req, res) => {
   });
 });
 
+app.post('/favorites/delete/:id', (req, res) => {
+  const id = req.params.id;
+
+  const index = favorites.findIndex(f => f.id == id);
+
+  if (index !== -1) {
+    favorites.splice(index, 1);
+  }
+
+  res.redirect('/favorites');
+});
+
+app.post('/favorites/delete/:id', (req, res) => {
+  console.log("DELETE HIT:", req.params.id);
+  res.redirect('/favorites');
+});
+
 // ====================
 // SERVER START
 // ====================
