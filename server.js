@@ -78,38 +78,37 @@ app.get('/listing/:id', async (req, res) => {
   }
 });
 
-// ====================
-// FAVORITES TOGGLE ❤️
-// ====================
-app.post('/favorites/toggle/:id', async (req, res) => {
+app.post('/favorites/add/:id', async (req, res) => {
   const id = req.params.id;
 
-  try {
-    const response = await fetch(`${API_URL}/${id}`);
-    const data = await response.json();
-    const house = data.data;
+  const response = await fetch(`${API_URL}/${id}`);
+  const data = await response.json();
+  const house = data.data;
 
-    const exists = favorites.find(f => f.id == id);
+  const index = favorites.findIndex(f => f.id == id);
 
-    if (exists) {
-      favorites = favorites.filter(f => f.id != id);
-    } else {
-      favorites.push({
-        id: house.id,
-        street: house.street,
-        house_nr: house.house_nr,
-        city: house.city,
-        price: house.price,
-        image: house.poster_image
-      });
-    }
+  let isFavorite;
 
-    res.redirect('back');
+  if (index === -1) {
+    favorites.push({
+      id: house.id,
+      street: house.street,
+      house_nr: house.house_nr,
+      city: house.city,
+      price: house.price,
+      image: house.poster_image
+    });
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Fout bij favorites');
+    isFavorite = true;
+  } else {
+    favorites.splice(index, 1);
+    isFavorite = false;
   }
+
+  res.json({
+    success: true,
+    isFavorite
+  });
 });
 
 // ====================
