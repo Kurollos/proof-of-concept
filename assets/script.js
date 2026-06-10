@@ -5,13 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", async function () {
       const id = this.dataset.id;
       const text = this.querySelector(".btn-text");
+      const favCountEl = document.querySelector(".fav-count");
 
       if (this.classList.contains("loading")) return;
 
       // =========================
-      // START ANIMATIE
+      // LOADING + ROTATE
       // =========================
-      this.classList.remove("rotate", "error", "success", "unfavorite");
+      this.classList.remove("rotate", "error", "success");
       void this.offsetWidth;
       this.classList.add("rotate", "loading");
 
@@ -24,38 +25,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const data = await res.json();
 
-        // stop loading
         this.classList.remove("loading");
 
         // =========================
-        // FLY ANIMATIE (ALTIJD)
+        // FLY ANIMATIE
         // =========================
         flyHeart(this);
 
         setTimeout(() => {
 
-          // RESET STATES (BELANGRIJK)
           this.classList.remove("success", "error");
 
           // =========================
-          // FAVORIET TOEVOEGEN
+          // SUCCESS (toegevoegd)
           // =========================
           if (data.isFavorite) {
-            this.classList.add("success");
 
+            this.classList.add("success");
             text.textContent = "❤️ Opgeslagen";
 
-            showPopup("Toegevoegd aan favorieten", "success");
+            // 🔥 SAFE COUNT UPDATE
+            if (favCountEl) {
+              const newCount =
+                typeof data.count === "number"
+                  ? data.count
+                  : (parseInt(favCountEl.textContent) || 0) + 1;
 
-          } 
+              favCountEl.textContent = newCount;
+
+              favCountEl.classList.remove("pop");
+              void favCountEl.offsetWidth;
+              favCountEl.classList.add("pop");
+            }
+
+            showPopup("Toegevoegd aan favorieten", "success");
+          }
+
           // =========================
-          // FAVORIET VERWIJDEREN
+          // REMOVE
           // =========================
           else {
             this.classList.add("error");
-
             text.textContent = "🤍 Bewaren";
 
+            // ❌ GEEN COUNT UPDATE (zoals jij wil)
             showPopup("Verwijderd uit favorieten", "error");
           }
 
