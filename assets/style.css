@@ -185,11 +185,6 @@ body {
 }
 
 
- /* hover */
-.save-btn:hover {
-  transform: scale(1.05);
-}
-
 /* hover */
 .save-btn:hover {
   transform: scale(1.05);
@@ -226,7 +221,6 @@ body {
 
 /* =========================
    UNFAVORITE (FAVORIET UIT)
-   -> rood als toggle state
 ========================= */
 
 .save-btn.unfavorite {
@@ -292,6 +286,11 @@ body {
     opacity: 0;
     transform: translate(-50%, -30px);
   }
+}
+
+.save-btn.error {
+  background: #dc3545 !important;
+  color: white !important;
 }
 
 /* =========================
