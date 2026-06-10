@@ -107,7 +107,8 @@ app.post('/favorites/add/:id', async (req, res) => {
 
   res.json({
     success: true,
-    isFavorite
+    isFavorite,
+    count: favorites.length   // 🔥 DIT MISSEN WE
   });
 });
 
