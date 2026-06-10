@@ -22,18 +22,17 @@
       alt="Hoofdfoto {{ listing.street }}"
     >
 
-    <!-- BEWAREN BUTTON (OVER IMAGE) -->
-    <form method="post" action="/favorites/toggle/{{ listing.id }}" class="save-form">
-      <button class="save-btn">
-        {% if listing.is_favorite %}
-          ❤️ Opgeslagen
-        {% else %}
-          🤍 Bewaren
-        {% endif %}
-      </button>
-    </form>
-
-  </section>
+   <div class="save-form">
+  <button class="save-btn" data-id="{{ listing.id }}">
+    <span class="btn-text">
+      {% if listing.is_favorite %}
+        ❤️ Opgeslagen
+      {% else %}
+        🤍 Bewaren
+      {% endif %}
+    </span>
+  </button>
+</div>
 
   <!-- TITEL + PRIJS -->
   <section class="title-block">
