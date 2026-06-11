@@ -32,17 +32,34 @@ const API_URL = "https://fdnd-agency.directus.app/items/f_houses";
 // ====================
 let favorites = [];
 
-// ====================
-// INDEX PAGE (OVERZICHT)
-// ====================
 app.get('/', async (req, res) => {
   try {
     const response = await fetch(API_URL);
     const data = await response.json();
 
+    let listings = data.data;
+
+    // ====================
+    // SORT LOGICA
+    // ====================
+    const sort = req.query.sort;
+
+    if (sort === 'a-z') {
+      listings = listings.sort((a, b) =>
+        a.street.localeCompare(b.street)
+      );
+    }
+
+    if (sort === 'z-a') {
+      listings = listings.sort((a, b) =>
+        b.street.localeCompare(a.street)
+      );
+    }
+
     res.render('index.liquid', {
-      listings: data.data,
-      favorites
+      listings,
+      favorites,
+      sort
     });
 
   } catch (error) {
