@@ -7,6 +7,23 @@
 <main class="container">
 
   <h1>Woningen te koop</h1>
+  <form method="GET" class="sort-form">
+  <label for="sort">Sorteer:</label>
+
+  <select name="sort" id="sort" onchange="this.form.submit()">
+    <option value="">Standaard</option>
+    <option value="a-z">A → Z (straat)</option>
+    <option value="z-a">Z → A (straat)</option>
+  </select>
+</form>
+
+{% assign sorted_listings = listings %}
+
+{% if sort == "a-z" %}
+  {% assign sorted_listings = listings | sort: "street" %}
+{% elsif sort == "z-a" %}
+  {% assign sorted_listings = listings | sort: "street" | reverse %}
+{% endif %}
 
   <!--  LISTING GRID -->
   <div class="listing-grid">
