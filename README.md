@@ -44,6 +44,12 @@ Door deze combinatie van loading states, animaties, kleurveranderingen, popups e
 
 <img width="959" height="473" alt="image" src="https://github.com/user-attachments/assets/fad2dbae-a98d-4422-b1fd-e1a3d92263bf" />
 
+## filterfunctie
+<img width="958" height="476" alt="image" src="https://github.com/user-attachments/assets/edd907a2-ef4a-444d-844a-666f7d1b9663" />
+
+<img width="956" height="470" alt="image" src="https://github.com/user-attachments/assets/711c4942-03cf-4593-baf5-c26120e5e2aa" />
+
+<img width="959" height="472" alt="image" src="https://github.com/user-attachments/assets/f1009668-4932-4c99-ba84-f4c017417137" />
 
 ## Gebruik
 De website maakt het mogelijk om woningen te bekijken, woningdetails te openen en woningen op te slaan als favoriet. Op de detailpagina kan een gebruiker een woning bewaren via de bewaren-knop. Tijdens deze interactie ontvangt de gebruiker direct feedback door middel van animaties, kleurveranderingen en popups. Op de favorietenpagina kunnen opgeslagen woningen worden bekeken en verwijderd.
