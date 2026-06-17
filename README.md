@@ -54,8 +54,13 @@ Door deze combinatie van loading states, animaties, kleurveranderingen, popups e
 ## Gebruik
 De website maakt het mogelijk om woningen te bekijken, woningdetails te openen en woningen op te slaan als favoriet. Op de detailpagina kan een gebruiker een woning bewaren via de bewaren-knop. Tijdens deze interactie ontvangt de gebruiker direct feedback door middel van animaties, kleurveranderingen en popups. Op de favorietenpagina kunnen opgeslagen woningen worden bekeken en verwijderd.
 
+https://github.com/Kurollos/proof-of-concept/blob/99a7b9426f32b1d85eb291e03286291a1e7a108b/views/detail.liquid#L25-L35
+
 ## Kenmerken
 De website bevat een homepagina met een overzicht van woningen, een detailpagina met uitgebreide woninginformatie en een favorietenpagina waarop opgeslagen woningen worden weergegeven. Daarnaast is er een interactieve bewaren-functionaliteit ontwikkeld met loading states, een hart-animatie, succes- en foutmeldingen en een dynamische favorieten teller. Door deze toevoegingen krijgt de gebruiker tijdens elke stap van de interactie duidelijke feedback.
+
+https://github.com/Kurollos/proof-of-concept/blob/99a7b9426f32b1d85eb291e03286291a1e7a108b/assets/script.js#L30-L62
+https://github.com/Kurollos/proof-of-concept/blob/99a7b9426f32b1d85eb291e03286291a1e7a108b/assets/script.js#L12-L28
 
 ## Installatie
 Om het project lokaal te gebruiken moet eerst de repository worden gekloond. Vervolgens kan naar de projectmap worden genavigeerd en kunnen de benodigde dependencies worden geïnstalleerd. Daarna kan de server worden gestart en is de website lokaal te bekijken via de browser.
