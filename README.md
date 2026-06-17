@@ -18,6 +18,8 @@ De instructies voor deze opdracht staan in: [docs/INSTRUCTIONS.md](https://githu
 <img width="959" height="473" alt="image" src="https://github.com/user-attachments/assets/c83a0701-0024-409a-8fff-c0f354663398" />
 <img width="958" height="476" alt="image" src="https://github.com/user-attachments/assets/6a324271-e6ce-4230-a530-73b503749ea8" />
 <img width="959" height="470" alt="image" src="https://github.com/user-attachments/assets/6c50d7ba-3622-4c63-b797-a9650c720181" />
+<img width="959" height="473" alt="image" src="https://github.com/user-attachments/assets/fad2dbae-a98d-4422-b1fd-e1a3d92263bf" />
+
 
 Voor deze opdracht heb ik een woningplatform ontwikkeld bestaande uit een homepagina, een detailpagina en een favorietenpagina. Op de homepagina worden alle beschikbare woningen weergegeven. Via de detailpagina kunnen gebruikers meer informatie bekijken over een specifieke woning. Daarnaast is er een favorietenpagina waarop opgeslagen woningen worden verzameld en weergegeven.
 
