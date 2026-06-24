@@ -38,7 +38,7 @@ Door deze combinatie van loading states, animaties, kleurveranderingen, popups e
 
 <img width="959" height="474" alt="image" src="https://github.com/user-attachments/assets/40c99c7d-58fd-4277-9d57-d9d582cc473e" />
 
-<img width="958" height="476" alt="image" src="https://github.com/user-attachments/assets/6a324271-e6ce-4230-a530-73b503749ea8" />
+<img width="260" height="346" alt="image" src="https://github.com/user-attachments/assets/900bb0c7-250a-4934-8d03-93a762e22927" />
 
 <img width="959" height="472" alt="image" src="https://github.com/user-attachments/assets/be313a38-ec17-4c0d-9ada-94e5b99b5bc3" />
 
