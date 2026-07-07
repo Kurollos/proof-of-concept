@@ -10,43 +10,61 @@
   <section class="hero">
 
     <div class="hero-visual">
-      <img 
-        src="https://assets.fstatic.nl/shared/images/funda_header.svg" 
+      <img
+        src="https://assets.fstatic.nl/shared/images/funda_header.svg"
         alt="Hero illustratie"
       >
     </div>
 
-   <div class="search-container">
+    <div class="search-container">
 
-  <!-- TABS -->
-  <nav class="tabs">
-    <button class="tab active" data-tab="koop">Koop</button>
-    <button class="tab" data-tab="huur">Huur</button>
-    <button class="tab" data-tab="nieuwbouw">Nieuwbouw</button>
-    <button class="tab" data-tab="recreatie">Recreatie</button>
-    <button class="tab" data-tab="europa">Europa</button>
-  </nav>
+      <!-- TABS -->
+      <nav class="tabs" aria-label="Type woningen">
 
-  <!-- SEARCH BAR -->
-  <form method="GET" class="search-form">
+        <a href="/?type=koop" class="tab active">
+          Koop
+        </a>
 
-    <input
-      type="text"
-      name="query"
-      placeholder="Zoek op plaats, buurt of postcode"
-    >
+        <a href="/?type=huur" class="tab">
+          Huur
+        </a>
 
-    <button type="submit" class="search-btn">
-      🔍
-    </button>
+        <a href="/?type=nieuwbouw" class="tab">
+          Nieuwbouw
+        </a>
 
-    <a href="/map" class="map-link">
-      🗺️ Zoek op kaart
-    </a>
+        <a href="/?type=recreatie" class="tab">
+          Recreatie
+        </a>
 
-  </form>
+        <a href="/?type=europa" class="tab">
+          Europa
+        </a>
 
-</div>
+      </nav>
+
+      <!-- SEARCH BAR -->
+      <form method="GET" class="search-form">
+
+        <input
+          type="text"
+          name="query"
+          placeholder="Zoek op plaats, buurt of postcode"
+        >
+
+        <button type="submit" class="search-btn">
+          🔍
+        </button>
+
+        <a href="/map" class="map-link">
+          🗺️ Zoek op kaart
+        </a>
+
+      </form>
+
+    </div>
+
+  </section>
 
   <!-- LISTINGS -->
   <section class="container">
@@ -54,13 +72,39 @@
     <h1>Woningen te koop</h1>
 
     <form method="GET" class="sort-form">
-      <label for="sort">Sorteer:</label>
 
-      <select name="sort" id="sort" onchange="this.form.submit()">
-        <option value="">Standaard</option>
-        <option value="a-z" {% if sort == "a-z" %}selected{% endif %}>A → Z (straat)</option>
-        <option value="z-a" {% if sort == "z-a" %}selected{% endif %}>Z → A (straat)</option>
+      <label for="sort">
+        Sorteer:
+      </label>
+
+      <select name="sort" id="sort">
+
+        <option value="">
+          Standaard
+        </option>
+
+        <option
+          value="a-z"
+          {% if sort == "a-z" %}selected{% endif %}
+        >
+          A → Z (straat)
+        </option>
+
+        <option
+          value="z-a"
+          {% if sort == "z-a" %}selected{% endif %}
+        >
+          Z → A (straat)
+        </option>
+
       </select>
+
+      <!-- Progressive Enhancement:
+           werkt zonder JavaScript -->
+      <button type="submit">
+        Sorteer
+      </button>
+
     </form>
 
     {% assign sorted_listings = listings %}
@@ -76,12 +120,15 @@
 
       {% for listing in sorted_listings %}
 
-        <a href="/listing/{{ listing.id }}" class="card">
+        <a
+          href="/listing/{{ listing.id }}"
+          class="card"
+        >
 
           <img
             class="hero-image"
             src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}"
-            alt="Hoofdfoto {{ listing.street }}"
+            alt="Hoofdfoto van {{ listing.street }} {{ listing.house_nr }}"
           >
 
           <div class="card-content">
@@ -99,9 +146,19 @@
             </p>
 
             <div class="facts">
-              <span>{{ listing.m2 | default: "n.v.t." }} m²</span>
-              <span>{{ listing.rooms | default: "n.v.t." }} kamers</span>
-              <span>{{ listing.m2_garden | default: "n.v.t." }} m² tuin</span>
+
+              <span>
+                {{ listing.m2 | default: "n.v.t." }} m²
+              </span>
+
+              <span>
+                {{ listing.rooms | default: "n.v.t." }} kamers
+              </span>
+
+              <span>
+                {{ listing.m2_garden | default: "n.v.t." }} m² tuin
+              </span>
+
             </div>
 
           </div>
