@@ -7,7 +7,10 @@
 <main class="ldp-container">
 
   <!-- TERUG -->
-  <a href="/" class="back-link">← Terug naar overzicht</a>
+  <a href="/" class="back-link">
+    ← Terug naar overzicht
+  </a>
+
 
   <!-- HERO IMAGE -->
   <section class="hero">
@@ -16,23 +19,52 @@
       {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
     </h1>
 
-    <img 
-      class="hero-image" 
-      src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}" 
-      alt="Hoofdfoto {{ listing.street }}"
+
+    <img
+      class="hero-image"
+      src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}"
+      alt="Hoofdfoto van woning aan {{ listing.street }} {{ listing.house_nr }}"
     >
 
-   <div class="save-form">
-  <button class="save-btn" data-id="{{ listing.id }}">
-    <span class="btn-text">
-      {% if listing.is_favorite %}
-        ❤️ Opgeslagen
-      {% else %}
-        🤍 Bewaren
-      {% endif %}
-    </span>
-  </button>
-</div>
+
+    <!-- BEWAREN -->
+    <div class="save-form">
+
+      <!-- Progressive Enhancement:
+           basis werkt zonder JavaScript,
+           JavaScript kan extra interactie toevoegen -->
+      <form
+        class="save-form"
+        method="POST"
+        action="/listing/{{ listing.id }}/favorite"
+      >
+
+        <button
+          class="save-btn"
+          type="submit"
+          data-id="{{ listing.id }}"
+        >
+
+          <span class="btn-text">
+
+            {% if listing.is_favorite %}
+              ❤️ Opgeslagen
+            {% else %}
+              🤍 Bewaren
+            {% endif %}
+
+          </span>
+
+        </button>
+
+      </form>
+
+    </div>
+
+
+  </section>
+
+
 
   <!-- TITEL + PRIJS -->
   <section class="title-block">
@@ -41,85 +73,146 @@
       {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
     </h2>
 
+
     <p class="location">
       {{ listing.postal_code }} {{ listing.city }}
     </p>
+
 
     <h3 class="price">
       € {{ listing.price | number_with_delimiter }} k.k.
     </h3>
 
+
   </section>
+
+
 
   <!-- FACTS -->
   <section class="facts">
-    <h2 class="visually-hidden">Woning kenmerken</h2>
 
-    <div>{{ listing.m2 }} m² wonen</div>
-    <div>{{ listing.m2_garden }} m² perceel</div>
-    <div>{{ listing.rooms }} kamers</div>
-    <div>{{ listing.construction_year }} bouwjaar</div>
+    <h2 class="visually-hidden">
+      Woning kenmerken
+    </h2>
+
+
+    <div>
+      {{ listing.m2 }} m² wonen
+    </div>
+
+
+    <div>
+      {{ listing.m2_garden }} m² perceel
+    </div>
+
+
+    <div>
+      {{ listing.rooms }} kamers
+    </div>
+
+
+    <div>
+      {{ listing.construction_year }} bouwjaar
+    </div>
+
+
   </section>
+
+
 
   <!-- OMSCHRIJVING -->
   <section class="description">
 
-    <h2>Omschrijving</h2>
+    <h2>
+      Omschrijving
+    </h2>
+
 
     <div class="text">
       {{ listing.description | raw }}
     </div>
 
+
   </section>
+
+
 
   <!-- KENMERKEN -->
   <section class="details">
 
-    <h2>Kenmerken</h2>
+    <h2>
+      Kenmerken
+    </h2>
+
 
     <table>
+
       <tr>
         <td>Makelaar</td>
         <td>{{ listing.agent }}</td>
       </tr>
+
 
       <tr>
         <td>Woonoppervlak</td>
         <td>{{ listing.m2 }} m²</td>
       </tr>
 
+
       <tr>
         <td>Perceel</td>
         <td>{{ listing.m2_garden }} m²</td>
       </tr>
+
 
       <tr>
         <td>Inhoud</td>
         <td>{{ listing.volume_m3 }} m³</td>
       </tr>
 
+
       <tr>
         <td>Postcode</td>
         <td>{{ listing.postal_code }}</td>
       </tr>
+
+
     </table>
 
+
   </section>
+
+
 
   <!-- MAKELAAR -->
   <aside class="agent">
 
-    <h2 class="visually-hidden">Makelaar</h2>
+    <h2 class="visually-hidden">
+      Makelaar
+    </h2>
 
-    <h3>{{ listing.agent }}</h3>
 
-    <p>Neem contact op voor deze woning</p>
+    <h3>
+      {{ listing.agent }}
+    </h3>
 
-    <button>Contact makelaar</button>
+
+    <p>
+      Neem contact op voor deze woning
+    </p>
+
+
+    <button>
+      Contact makelaar
+    </button>
+
 
   </aside>
 
+
+
 </main>
+
 
 {% include 'partials/foot' %}
 
