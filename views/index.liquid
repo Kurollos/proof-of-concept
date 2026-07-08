@@ -1,3 +1,4 @@
+
 {% include 'partials/head' %}
 
 <body>
@@ -13,6 +14,9 @@
       <img
         src="https://assets.fstatic.nl/shared/images/funda_header.svg"
         alt="Hero illustratie"
+        width="600"
+        height="300"
+        fetchpriority="high"
       >
     </div>
 
@@ -50,6 +54,7 @@
           type="text"
           name="query"
           placeholder="Zoek op plaats, buurt of postcode"
+          aria-label="Zoek woning op plaats, buurt of postcode"
         >
 
         <button type="submit" class="search-btn">
@@ -65,6 +70,7 @@
     </div>
 
   </section>
+
 
   <!-- LISTINGS -->
   <section class="container">
@@ -99,13 +105,12 @@
 
       </select>
 
-      <!-- Progressive Enhancement:
-           werkt zonder JavaScript -->
       <button type="submit">
         Sorteer
       </button>
 
     </form>
+
 
     {% assign sorted_listings = listings %}
 
@@ -114,6 +119,7 @@
     {% elsif sort == "z-a" %}
       {% assign sorted_listings = listings | sort: "street" | reverse %}
     {% endif %}
+
 
     <!-- LISTING GRID -->
     <div class="listing-grid">
@@ -126,10 +132,14 @@
         >
 
           <img
-            class="hero-image"
-            src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}"
+            class="card-image"
+            src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}?width=400"
             alt="Hoofdfoto van {{ listing.street }} {{ listing.house_nr }}"
+            width="400"
+            height="300"
+            loading="lazy"
           >
+
 
           <div class="card-content">
 
@@ -137,13 +147,16 @@
               {{ listing.street }} {{ listing.house_nr }}
             </h2>
 
+
             <p>
               {{ listing.postal_code }} {{ listing.city }}
             </p>
 
+
             <p class="price">
               € {{ listing.price | number_with_delimiter }}
             </p>
+
 
             <div class="facts">
 
@@ -161,6 +174,7 @@
 
             </div>
 
+
           </div>
 
         </a>
@@ -172,6 +186,7 @@
   </section>
 
 </main>
+
 
 {% include 'partials/foot' %}
 
