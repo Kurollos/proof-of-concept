@@ -11,7 +11,6 @@
     ← Terug naar overzicht
   </a>
 
-
   <!-- HERO IMAGE -->
   <section class="hero">
 
@@ -19,52 +18,54 @@
       {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
     </h1>
 
-
     <img
       class="hero-image"
       src="https://fdnd-agency.directus.app/assets/{{ listing.poster_image }}"
       alt="Hoofdfoto van woning aan {{ listing.street }} {{ listing.house_nr }}"
     >
 
-
     <!-- BEWAREN -->
     <div class="save-form">
 
-      <!-- Progressive Enhancement:
-           basis werkt zonder JavaScript,
-           JavaScript kan extra interactie toevoegen -->
+      <!--
+        Progressive Enhancement:
+        zonder JavaScript werkt het formulier via POST.
+        Met JavaScript krijgt de gebruiker extra feedback
+        zonder dat de pagina opnieuw hoeft te laden.
+      -->
       <form
-        class="save-form"
+        class="favorite-form"
         method="POST"
-        action="/listing/{{ listing.id }}/favorite"
+        action="/favorites/add/{{ listing.id }}"
       >
 
         <button
           class="save-btn"
           type="submit"
           data-id="{{ listing.id }}"
+          aria-label="{% if listing.is_favorite %}Woning verwijderen uit favorieten{% else %}Woning toevoegen aan favorieten{% endif %}"
         >
 
           <span class="btn-text">
-
             {% if listing.is_favorite %}
               ❤️ Opgeslagen
             {% else %}
               🤍 Bewaren
             {% endif %}
-
           </span>
 
         </button>
+
+        <p
+          class="favorite-feedback"
+          aria-live="polite"
+        ></p>
 
       </form>
 
     </div>
 
-
   </section>
-
-
 
   <!-- TITEL + PRIJS -->
   <section class="title-block">
@@ -73,20 +74,15 @@
       {{ listing.street }} {{ listing.house_nr }}{{ listing.nr_addition }}
     </h2>
 
-
     <p class="location">
       {{ listing.postal_code }} {{ listing.city }}
     </p>
-
 
     <h3 class="price">
       € {{ listing.price | number_with_delimiter }} k.k.
     </h3>
 
-
   </section>
-
-
 
   <!-- FACTS -->
   <section class="facts">
@@ -95,30 +91,23 @@
       Woning kenmerken
     </h2>
 
-
     <div>
       {{ listing.m2 }} m² wonen
     </div>
-
 
     <div>
       {{ listing.m2_garden }} m² perceel
     </div>
 
-
     <div>
       {{ listing.rooms }} kamers
     </div>
-
 
     <div>
       {{ listing.construction_year }} bouwjaar
     </div>
 
-
   </section>
-
-
 
   <!-- OMSCHRIJVING -->
   <section class="description">
@@ -127,15 +116,11 @@
       Omschrijving
     </h2>
 
-
     <div class="text">
       {{ listing.description | raw }}
     </div>
 
-
   </section>
-
-
 
   <!-- KENMERKEN -->
   <section class="details">
@@ -144,7 +129,6 @@
       Kenmerken
     </h2>
 
-
     <table>
 
       <tr>
@@ -152,37 +136,29 @@
         <td>{{ listing.agent }}</td>
       </tr>
 
-
       <tr>
         <td>Woonoppervlak</td>
         <td>{{ listing.m2 }} m²</td>
       </tr>
-
 
       <tr>
         <td>Perceel</td>
         <td>{{ listing.m2_garden }} m²</td>
       </tr>
 
-
       <tr>
         <td>Inhoud</td>
         <td>{{ listing.volume_m3 }} m³</td>
       </tr>
-
 
       <tr>
         <td>Postcode</td>
         <td>{{ listing.postal_code }}</td>
       </tr>
 
-
     </table>
 
-
   </section>
-
-
 
   <!-- MAKELAAR -->
   <aside class="agent">
@@ -191,28 +167,21 @@
       Makelaar
     </h2>
 
-
     <h3>
       {{ listing.agent }}
     </h3>
-
 
     <p>
       Neem contact op voor deze woning
     </p>
 
-
-    <button>
+    <button type="button">
       Contact makelaar
     </button>
 
-
   </aside>
 
-
-
 </main>
-
 
 {% include 'partials/foot' %}
 
