@@ -1,51 +1,80 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".save-btn");
+  // =========================
+  // FAVORIETEN
+  // =========================
 
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", async function () {
-      const id = this.dataset.id;
-      const text = this.querySelector(".btn-text");
+  const forms = document.querySelectorAll(".favorite-form");
+
+  forms.forEach((form) => {
+    form.addEventListener("submit", async function (event) {
+
+      // Progressive Enhancement:
+      // Zonder JavaScript werkt het normale formulier.
+      // Met JavaScript krijgen we extra feedback en animaties.
+      event.preventDefault();
+
+      const btn = this.querySelector(".save-btn");
+      const text = btn.querySelector(".btn-text");
+      const feedback = this.querySelector(".favorite-feedback");
       const favCountEl = document.querySelector(".fav-count");
 
-      if (this.classList.contains("loading")) return;
+      if (btn.classList.contains("loading")) return;
 
       // =========================
       // LOADING + ROTATE
       // =========================
-      this.classList.remove("rotate", "error", "success");
-      void this.offsetWidth;
-      this.classList.add("rotate", "loading");
+
+      btn.classList.remove("rotate", "error", "success");
+
+      void btn.offsetWidth;
+
+      btn.classList.add("rotate", "loading");
 
       try {
-        const res = await fetch(`/favorites/add/${id}`, {
+
+        // JavaScript vraagt om JSON.
+        const res = await fetch(form.action, {
           method: "POST",
+          headers: {
+            Accept: "application/json"
+          }
         });
 
-        if (!res.ok) throw new Error("Server error");
+        if (!res.ok) {
+          throw new Error("Server error");
+        }
 
         const data = await res.json();
 
-        this.classList.remove("loading");
+        btn.classList.remove("loading");
 
         // =========================
         // FLY ANIMATIE
         // =========================
-        flyHeart(this);
+
+        flyHeart(btn);
 
         setTimeout(() => {
 
-          this.classList.remove("success", "error");
+          btn.classList.remove("success", "error");
 
           // =========================
-          // SUCCESS (toegevoegd)
+          // TOEGEVOEGD
           // =========================
+
           if (data.isFavorite) {
 
-            this.classList.add("success");
+            btn.classList.add("success");
+
             text.textContent = "❤️ Opgeslagen";
 
-            // 🔥 SAFE COUNT UPDATE
+            if (feedback) {
+              feedback.textContent =
+                "Woning is opgeslagen als favoriet.";
+            }
+
             if (favCountEl) {
+
               const newCount =
                 typeof data.count === "number"
                   ? data.count
@@ -54,80 +83,175 @@ document.addEventListener("DOMContentLoaded", () => {
               favCountEl.textContent = newCount;
 
               favCountEl.classList.remove("pop");
+
               void favCountEl.offsetWidth;
+
               favCountEl.classList.add("pop");
             }
 
-            showPopup("Toegevoegd aan favorieten", "success");
+            showPopup(
+              "Toegevoegd aan favorieten",
+              "success"
+            );
+
           }
 
           // =========================
-          // REMOVE
+          // VERWIJDERD
           // =========================
+
           else {
-            this.classList.add("error");
+
+            btn.classList.add("error");
+
             text.textContent = "🤍 Bewaren";
 
-            // ❌ GEEN COUNT UPDATE (zoals jij wil)
-            showPopup("Verwijderd uit favorieten", "error");
+            if (feedback) {
+              feedback.textContent =
+                "Woning is verwijderd uit favorieten.";
+            }
+
+            showPopup(
+              "Verwijderd uit favorieten",
+              "error"
+            );
           }
 
         }, 800);
 
       } catch (err) {
+
         console.error(err);
 
-        this.classList.remove("loading", "success");
-        this.classList.add("error");
+        btn.classList.remove(
+          "loading",
+          "success"
+        );
 
-        showPopup("Er ging iets mis", "error");
+        btn.classList.add("error");
+
+        if (feedback) {
+          feedback.textContent =
+            "Het opslaan is niet gelukt. Probeer het opnieuw.";
+        }
+
+        showPopup(
+          "Er ging iets mis",
+          "error"
+        );
       }
     });
   });
+
+
+  // =========================
+  // HAMBURGER MENU
+  // =========================
+
+  const menuToggle =
+    document.querySelector(".menu-toggle");
+
+  const menuContent =
+    document.querySelector("#main-menu");
+
+  if (menuToggle && menuContent) {
+
+    menuToggle.addEventListener("click", () => {
+
+      const isOpen =
+        menuContent.classList.toggle("open");
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        isOpen
+      );
+
+      menuToggle.setAttribute(
+        "aria-label",
+        isOpen
+          ? "Menu sluiten"
+          : "Menu openen"
+      );
+
+      menuToggle.textContent =
+        isOpen ? "✕" : "☰";
+    });
+  }
 });
+
 
 /* =========================
    POPUP
 ========================= */
+
 function showPopup(message, type) {
+
   const popup = document.createElement("div");
+
   popup.className = `popup ${type}`;
+
   popup.textContent = message;
 
   document.body.appendChild(popup);
 
-  setTimeout(() => popup.remove(), 2500);
+  setTimeout(() => {
+    popup.remove();
+  }, 2500);
 }
+
 
 /* =========================
    HEART FLY ANIMATION
 ========================= */
+
 function flyHeart(startEl) {
-  const targetEl = document.querySelector(".favorites-tab");
+
+  const targetEl =
+    document.querySelector(".favorites-tab");
+
   if (!targetEl) return;
 
   const heart = document.createElement("div");
+
   heart.classList.add("flying-heart");
+
   heart.textContent = "❤️";
 
   document.body.appendChild(heart);
 
-  const start = startEl.getBoundingClientRect();
-  const target = targetEl.getBoundingClientRect();
+  const start =
+    startEl.getBoundingClientRect();
+
+  const target =
+    targetEl.getBoundingClientRect();
 
   heart.style.position = "fixed";
-  heart.style.left = start.left + start.width / 2 + "px";
-  heart.style.top = start.top + start.height / 2 + "px";
+
+  heart.style.left =
+    start.left + start.width / 2 + "px";
+
+  heart.style.top =
+    start.top + start.height / 2 + "px";
+
   heart.style.fontSize = "18px";
+
   heart.style.zIndex = "9999";
-  heart.style.transition = "all 0.8s ease-in-out";
+
+  heart.style.transition =
+    "all 0.8s ease-in-out";
 
   heart.offsetHeight;
 
-  heart.style.left = target.left + target.width / 2 + "px";
-  heart.style.top = target.top + target.height / 2 + "px";
+  heart.style.left =
+    target.left + target.width / 2 + "px";
+
+  heart.style.top =
+    target.top + target.height / 2 + "px";
+
   heart.style.opacity = "0";
-  heart.style.transform = "scale(0.3)";
+
+  heart.style.transform =
+    "scale(0.3)";
 
   setTimeout(() => {
     heart.remove();
