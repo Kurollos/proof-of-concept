@@ -1,3 +1,4 @@
+
 import express from 'express';
 import { Liquid } from 'liquidjs';
 import path from 'path';
@@ -25,23 +26,28 @@ app.set('view engine', 'liquid');
 // ====================
 // API
 // ====================
-const API_URL = "https://fdnd-agency.directus.app/items/f_houses";
+const API_URL =
+  'https://fdnd-agency.directus.app/items/f_houses';
 
 // ====================
 // FAVORITES (TEMP STORAGE)
 // ====================
 let favorites = [];
 
+// ====================
+// HOMEPAGE
+// ====================
 app.get('/', async (req, res) => {
   try {
     const response = await fetch(API_URL);
-    const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(`Directus API fout: ${response.status}`);
+    }
+
+    const data = await response.json();
     let listings = data.data;
 
-    // ====================
-    // SORT LOGICA
-    // ====================
     const sort = req.query.sort;
 
     if (sort === 'a-z') {
@@ -61,7 +67,6 @@ app.get('/', async (req, res) => {
       favorites,
       sort
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).send('Fout bij laden woningen');
@@ -69,18 +74,28 @@ app.get('/', async (req, res) => {
 });
 
 // ====================
-// DETAIL PAGE (Funda LDP)
+// DETAIL PAGE
 // ====================
 app.get('/listing/:id', async (req, res) => {
   const id = req.params.id;
 
   try {
     const response = await fetch(`${API_URL}/${id}`);
-    const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(`Directus API fout: ${response.status}`);
+    }
+
+    const data = await response.json();
     const house = data.data;
 
-    const isFavorite = favorites.some(f => f.id == id);
+    if (!house) {
+      return res.status(404).send('Woning niet gevonden');
+    }
+
+    const isFavorite = favorites.some(
+      favorite => String(favorite.id) === String(id)
+    );
 
     res.render('detail.liquid', {
       listing: {
@@ -88,45 +103,83 @@ app.get('/listing/:id', async (req, res) => {
         is_favorite: isFavorite
       }
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).send('Fout bij laden woning');
   }
 });
 
+// ====================
+// ADD / REMOVE FAVORITE
+// ====================
 app.post('/favorites/add/:id', async (req, res) => {
   const id = req.params.id;
 
-  const response = await fetch(`${API_URL}/${id}`);
-  const data = await response.json();
-  const house = data.data;
+  // Alleen fetch-aanvragen met deze header krijgen JSON.
+  const wantsJson =
+    req.get('X-Requested-With') === 'XMLHttpRequest';
 
-  const index = favorites.findIndex(f => f.id == id);
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
 
-  let isFavorite;
+    if (!response.ok) {
+      throw new Error(`Directus API fout: ${response.status}`);
+    }
 
-  if (index === -1) {
-    favorites.push({
-      id: house.id,
-      street: house.street,
-      house_nr: house.house_nr,
-      city: house.city,
-      price: house.price,
-      image: house.poster_image
-    });
+    const data = await response.json();
+    const house = data.data;
 
-    isFavorite = true;
-  } else {
-    favorites.splice(index, 1);
-    isFavorite = false;
+    if (!house) {
+      return res.status(404).send('Woning niet gevonden');
+    }
+
+    const index = favorites.findIndex(
+      favorite => String(favorite.id) === String(id)
+    );
+
+    let isFavorite;
+
+    if (index === -1) {
+      favorites.push({
+        id: house.id,
+        street: house.street,
+        house_nr: house.house_nr,
+        city: house.city,
+        price: house.price,
+        image: house.poster_image
+      });
+
+      isFavorite = true;
+    } else {
+      favorites.splice(index, 1);
+      isFavorite = false;
+    }
+
+    // JavaScript: stuur JSON terug.
+    if (wantsJson) {
+      return res.json({
+        success: true,
+        isFavorite,
+        count: favorites.length
+      });
+    }
+
+    // Zonder JavaScript: stuur terug naar de detailpagina.
+    return res.redirect(`/listing/${id}`);
+  } catch (error) {
+    console.error(error);
+
+    if (wantsJson) {
+      return res.status(500).json({
+        success: false,
+        message: 'Fout bij opslaan van favoriet'
+      });
+    }
+
+    return res.status(500).send(
+      'Fout bij opslaan van favoriet'
+    );
   }
-
-  res.json({
-    success: true,
-    isFavorite,
-    count: favorites.length   // 🔥 DIT MISSEN WE
-  });
 });
 
 // ====================
@@ -138,21 +191,21 @@ app.get('/favorites', (req, res) => {
   });
 });
 
+// ====================
+// DELETE FAVORITE
+// ====================
 app.post('/favorites/delete/:id', (req, res) => {
   const id = req.params.id;
 
-  const index = favorites.findIndex(f => f.id == id);
+  const index = favorites.findIndex(
+    favorite => String(favorite.id) === String(id)
+  );
 
   if (index !== -1) {
     favorites.splice(index, 1);
   }
 
-  res.redirect('/favorites');
-});
-
-app.post('/favorites/delete/:id', (req, res) => {
-  console.log("DELETE HIT:", req.params.id);
-  res.redirect('/favorites');
+  return res.redirect('/favorites');
 });
 
 // ====================
